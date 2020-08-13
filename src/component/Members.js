@@ -7,7 +7,7 @@ function Members(props) {
         {uid:"asd",name:"Guy",nickname:"Guy"},
         {uid:"abc",name:"Dangkamol",nickname:"Cheng"}
     ]
-    const memberlist = members.map((member) => <Member key={member.uid} mname={member.name} ></Member> )
+    const memberlist = members.map((member) => <Member key={member.uid} mname={member.name} {...member}></Member> )
         
     
     return (
