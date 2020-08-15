@@ -7,12 +7,12 @@ function Members(props) {
         {uid:"asd",name:"Guy",nickname:"Guy"},
         {uid:"abc",name:"Dangkamol",nickname:"Cheng"}
     ]
-    const memberlist = members.map((member) => <Member key={member.uid} mname={member.name} {...member}></Member> )
+    const memberlist = members.map((member) => <Member {...member}></Member> )
         
     
     return (
         <div>
-            {console.log("m")}
+            {/* {onsole.log("m")} */}
             {memberlist}
         </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react'
 import Content from './component/Content'
+import RealmApp from './realm/RealmApp'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -32,7 +33,7 @@ export default function App() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
           Hope of Bangkok Stat
           </Typography>
           <Button color="inherit">Login</Button>
@@ -41,7 +42,7 @@ export default function App() {
       <Container maxWidth="sm" >
         <Content />
       </Container>
-      
+      <RealmApp />
     </div>
   )
 }
