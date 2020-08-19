@@ -1,8 +1,9 @@
-import React,{useContext,useReducer} from 'react'
-import Content from './component/Content'
+import React,{useReducer} from 'react'
+
 import { StateContext } from './contexts'
 import appReducer from './reducers'
 import RealmFunc from './realm/RealmFunc';
+import Content from './component/Content'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -32,7 +33,7 @@ export default function App() {
 
   const classes = useStyles();
   return (
-<>
+    <StateContext.Provider value={{ state, dispatch }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -41,14 +42,14 @@ export default function App() {
           <Typography variant="h5" className={classes.title}>
           Hope of Bangkok Stat
           </Typography>
-          <Button color="inherit">Login</Button>
+  <Button color="inherit">{null}</Button>
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm" >
         <Content />
         <RealmFunc />
       </Container>
-</>
+    </StateContext.Provider>
   )
 }
 
