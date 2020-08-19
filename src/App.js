@@ -1,5 +1,8 @@
-import React from 'react'
+import React,{useContext,useReducer} from 'react'
 import Content from './component/Content'
+import { StateContext } from './contexts'
+import appReducer from './reducers'
+import RealmFunc from './realm/RealmFunc';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -23,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function App() {
-  
+
+  const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
+  const { user } = state
+
   const classes = useStyles();
   return (
-    <div className={classes.root}>
+<>
       <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -40,9 +46,9 @@ export default function App() {
       </AppBar>
       <Container maxWidth="sm" >
         <Content />
+        <RealmFunc />
       </Container>
-      
-    </div>
+</>
   )
 }
 
