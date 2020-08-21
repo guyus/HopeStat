@@ -5,7 +5,7 @@ const app = new Realm.App({ id: "hope-stat-mmqrv" });
 function userReducer (state, action) {
     switch (action.type) {
         case 'LOGIN': 
-            login() 
+            return login() 
             //break          
         case 'REGISTER':{
             return action.username
@@ -27,6 +27,7 @@ function userReducer (state, action) {
             const rst = await user.functions.function0("123")
             console.log(rst);
             //setGuser(user);
+            return user;
         } catch (error) {
             //setLoading("null");
         }

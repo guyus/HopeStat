@@ -2,8 +2,9 @@ import React,{useReducer} from 'react'
 
 import { StateContext } from './contexts'
 import appReducer from './reducers'
-import RealmFunc from './realm/RealmFunc';
+//import RealmFunc from './realm/RealmFunc';
 import Content from './component/Content'
+import User from './component/User'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 export default function App() {
 
   const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
-  const { user } = state
 
   const classes = useStyles();
   return (
@@ -47,7 +47,7 @@ export default function App() {
       </AppBar>
       <Container maxWidth="sm" >
         <Content />
-        <RealmFunc />
+        <User />
       </Container>
     </StateContext.Provider>
   )
