@@ -6,10 +6,11 @@ const RealmFunc = () => {
     const credentials = Realm.Credentials.anonymous();
     const app = new Realm.App({ id: "hope-stat-mmqrv" });
   // Authenticate the user
-    React.useEffect(() => {
+    useEffect(() => {
         async function login() {
             try {
                 //setLoading("true");
+                console.log(guser)
                 const user = await app.logIn(credentials);
                 const rst = await user.functions.function0("123")
                 console.log(rst);
@@ -18,7 +19,7 @@ const RealmFunc = () => {
                 //setLoading("null");
             }
         }
-        login()},[]);
+        login()},[app, credentials, guser]);
     return (
         <div>
             {null}

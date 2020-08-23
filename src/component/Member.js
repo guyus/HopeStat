@@ -1,7 +1,6 @@
 import React from 'react'
 import Ta from './Ta'
 
-
 export default function Member(props) {
     
     return (
