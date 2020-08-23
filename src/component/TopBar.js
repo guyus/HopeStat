@@ -1,5 +1,5 @@
 import React from 'react'
-import RealmApp,{ useRealmApp } from "../realm/RealmApp"
+import { useRealmApp } from "../realm/RealmApp"
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -43,7 +43,7 @@ export default function TopBar() {
           <Typography variant="h5" className={classes.title}>
             Hope of Bangkok Stat
           </Typography>
-            <Button color="inherit" onClick={e=>logOut()}>{user._id}</Button>
+            <Button color="inherit" onClick={e=>logOut()}>{user.id}</Button>
             <Button color="inherit" onClick={()=>handleLogin()}>Logout</Button>
         </Toolbar>
       </AppBar>

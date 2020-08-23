@@ -1,18 +1,23 @@
 import * as React from "react";
 import * as Realm from "realm-web";
 
-const REALM_APP_ID = "hope-stat-mmqrv";
+const REALM_APP_ID = "hopeta-qtsej";
+//const REALM_APP_ID = "todo-bpmmo";
+
+//const REALM_APP_ID = "blog-ewnzs";
 const app = new Realm.App({ id: REALM_APP_ID });
 
 const RealmAppContext = React.createContext(undefined);
 
 const RealmApp = ({ children }) => {
   // Keep track of the current user in local state
-  //const appRef = React.useRef(app);
-  const [user, setUser] = React.useState(app.currentUser);
+  
+  const appRef = React.useRef(app);
+  const [user, setUser] = React.useState();
   React.useEffect(() => {
-    setUser(app.currentUser);
-  }, [user]);
+    
+    //setUser(app.currentUser);
+  }, [appRef.current.currentUser]);
   //}, [appRef.current.currentUser]);
   
   // Let new users register an account
@@ -21,18 +26,21 @@ const RealmApp = ({ children }) => {
   }
   
   // Let registered users log in
-  const logIn = async (email, password) => {
+  const logIn = async (mobile_No) => {
     //const credentials = Realm.Credentials.emailPassword(email, password);
-    const credentials = Realm.Credentials.anonymous();
+    console.log(mobile_No)
+    //const credentials = Realm.Credentials.anonymous()
+    const credentials = Realm.Credentials.function({ Mobile_No: "0941177741" })
+    console.log(app.credentials)
     await app.logIn(credentials);
-    console.log(app)
+    console.log(app.currentUser)
     setUser(app.currentUser);
   }
   
   // Let logged in users log out
   const logOut = async () => {
     await app.currentUser?.logOut();
-    setUser('');
+    setUser(null);
   }
   
   // Provide the current user and authentication methods to the wrapped tree
