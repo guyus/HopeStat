@@ -30,7 +30,7 @@ const RealmApp = ({ children }) => {
     //const credentials = Realm.Credentials.emailPassword(email, password);
     console.log(mobile_No)
     //const credentials = Realm.Credentials.anonymous()
-    const credentials = Realm.Credentials.function({ Mobile_No: "0941177741" })
+    const credentials = Realm.Credentials.function(mobile_No)
     console.log(app.credentials)
     await app.logIn(credentials);
     console.log(app.currentUser)

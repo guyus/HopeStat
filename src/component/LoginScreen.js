@@ -13,21 +13,21 @@ import { useRealmApp } from "../realm/RealmApp"
 
 export default function LoginScreen() {
     const {logIn} = useRealmApp();
-    const [mobile_No,setMobile_No] = React.useState()
+    const [mobile_No,setMobile_No] = React.useState('')
 
     return (
         <Container maxWidth="sm" >
-            <form >
+  
             <Typography variant="h6" component="h6">
             ใส่หมายเลขโทรศัพท์
             </Typography>
                 <TextField value={mobile_No} onChange={e=>setMobile_No(e.target.value)}
-                id="standard-basic" label="xxx-xxxx-xxxx" type="number"
+                id="standard-basic" label="xxx-xxxx-xxxx" 
                     InputLabelProps={{
                     shrink: true,
                 }}/>  
-                <Button name="Mobile_No" color="primary" variant="contained" onClick={ (e)=>logIn({ Mobile_No:e.target.value })}>เข้าสู่ระบบ</Button>
-            </form>
+                <Button name="Mobile_No" color="primary" variant="contained" onClick={ (e)=>logIn({ Mobile_No:mobile_No })}>เข้าสู่ระบบ</Button>
+
 
         </Container>
     )
