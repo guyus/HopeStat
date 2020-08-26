@@ -5,8 +5,8 @@ export default function Member(props) {
     
     return (
         <div>
-            {props.name} {props.nickname}
-            <Ta uid = {props.uid} />
+            {props.Name} {props.Surname} ({props.Nick_Name})
+            <Ta User_id = {props.User_id} />
         </div>
     )
 }

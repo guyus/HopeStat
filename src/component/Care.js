@@ -25,13 +25,13 @@ export default function Care(props) {
     return (
         <div>
             <Box component="div" display="flex" boxShadow={1}   >
-                <Typography variant="h6" className={classes.boxhead} onClick={handleClick}>{props.name} </Typography>
+                <Typography variant="h6" className={classes.boxhead} onClick={handleClick}>{props.cname} </Typography>
                 {isShowMembers? <Button size="small" startIcon={<SaveIcon />}>Save</Button>:null}
             </Box>
             
             
               
-            {isShowMembers? <Box pl={5} pt={1}><Members cname={props.name} /></Box>:null}
+            {isShowMembers? <Box pl={5} pt={1}><Members cname={props.cname} /></Box>:null}
             
         </div>
     )

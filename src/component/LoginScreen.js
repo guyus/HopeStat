@@ -13,7 +13,7 @@ import { useRealmApp } from "../realm/RealmApp"
 
 export default function LoginScreen() {
     const {logIn} = useRealmApp();
-    const [mobile_No,setMobile_No] = React.useState('')
+    const [mobile_No,setMobile_No] = React.useState('0941177741')
 
     return (
         <Container maxWidth="sm" >
