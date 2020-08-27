@@ -33,7 +33,9 @@ export default function TopBar() {
         //handleAuthenticationError(err);
       }
     };
-
+    const d = new Date()  
+    const sunDate = new Date(d.setDate(d.getDate() - d.getDay()))
+    sunDate.setUTCHours(0,0,0,0);
     return (
         <AppBar position="static">
         <Toolbar>
@@ -42,7 +44,7 @@ export default function TopBar() {
           </IconButton>
           <Typography variant="h5" className={classes.title}>
             Hope of Bangkok Stat
-          </Typography>
+          </Typography>Date: [{sunDate.toDateString()}]
             <Button color="inherit" onClick={e=>logOut()}>{user.id}</Button>
             <Button color="inherit" onClick={()=>handleLogin()}>Logout</Button>
         </Toolbar>

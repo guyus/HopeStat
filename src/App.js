@@ -25,11 +25,16 @@ function RequireAuthentication() {
   if (!app) {
     return <div>Loading</div>;
   }
+  const d = new Date()  
+  const d1 = new Date(d.setDate(d.getDate() - d.getDay()))
+  d1.setUTCHours(0,0,0,0);
   return app.user ? ( // <StateContext.Provider value={{ state, dispatch }}>
     <>
       <TopBar />
       <Container maxWidth="sm" >
-      {console.log(app.user)}
+      {console.log(app.user)}{
+      
+      console.log( d1.toISOString())}
         <Content />
       </Container>  
     </>
