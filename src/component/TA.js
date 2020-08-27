@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useRealmApp } from "../realm/RealmApp"
 import Checkbox from '@material-ui/core/Checkbox';
 //import FormGroup from '@material-ui/core/FormGroup';
@@ -6,21 +6,31 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 export default function Ta(props) {
     //const [talist,setTalist] = React.useState([{_id:'',User_id:'',Date:'',isCh:true,isCr:true,isRv:true}])
-    const [talist,setTalist] = React.useState({})
-    const {user} = useRealmApp();
+    const [talist,setTalist] = React.useState({isCh:false,isCr:false,isRv:false})
+    const [isLoading, setIsLoading] = useState(false)
+
+    const {user} = useRealmApp()
     //const [ta, setta] = useState(initialState)
-    React.useEffect(()=>{
+    React.useEffect(()=>{ 
       async function getTa(){
+          setIsLoading(true)
+          //console.log(props.User_id)
           let [ta] = await user.functions.taList(props.User_id,'2016-01-01')
+          //let [ta] = await user.functions.taList('5f112b3046adfc2ce00f39c1','2016-01-01')
+          if(ta===undefined) {
+            ta={User_id:props.User_id,isCh:false,isCr:false,isRv:false};console.log("in undefined")
+          }
           setTalist(ta)
       }getTa()
-      console.log(talist)
-    },[props.User_id, talist, user.functions])
+      //console.log(talist)
+      setIsLoading(false)
+      //
+    },[])
     console.log(talist)
     
     const handleInputChange=(e)=>{
-        console.log("before")
-        console.log(talist)
+        //console.log("before")
+        //console.log(talist)
         talist[e.target.name]=e.target.checked
 
         //setTalist(talist)
@@ -29,9 +39,22 @@ export default function Ta(props) {
         console.log(talist)
 
     }
+    const CheckTA = (iName,iLabel,iValue) => (
+      <FormControlLabel
+      control={<Checkbox color="primary" name={iName}
+      type="checkbox"
+      checked={iValue}
+      onChange={handleInputChange}/>}
+      label={iLabel}
+      labelPlacement="top"/>
+    )
     return (
+      <>
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : (
         <div>
-        
+          
           <FormControlLabel
             control={<Checkbox color="primary" name="isCh"
             type="checkbox"
@@ -57,5 +80,7 @@ export default function Ta(props) {
             labelPlacement="top"
           />
         </div>
+      )}
+      </>  
     )
 }
