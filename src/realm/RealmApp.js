@@ -13,9 +13,11 @@ const RealmApp = ({ children }) => {
   // Keep track of the current user in local state
   
   const appRef = React.useRef(app);
+  
   const [user, setUser] = React.useState();
+  const [userinfo, setUserinfo] = React.useState();
+
   React.useEffect(() => {
-    
     setUser(app.currentUser);
   }, [appRef.current.currentUser]);
   //}, [appRef.current.currentUser]);
@@ -28,24 +30,39 @@ const RealmApp = ({ children }) => {
   // Let registered users log in
   const logIn = async (mobile_No) => {
     //const credentials = Realm.Credentials.emailPassword(email, password);
-    console.log(mobile_No)
+    //console.log(mobile_No)
     //const credentials = Realm.Credentials.anonymous()
     const credentials = Realm.Credentials.function(mobile_No)
-    console.log(app.credentials)
-    await app.logIn(credentials);
-    console.log(app.currentUser)
-    setUser(app.currentUser);
+    //console.log(app.credentials)
+    await app.logIn(credentials)
+    //console.log(app.currentUser)
+    setUser(app.currentUser)
+    const Sys_id = {Sys_id:app.currentUser._id}
+    //console.log({mobile_No,Sys_id})
+    setUserinfo(await app.currentUser.functions.userSave(mobile_No,Sys_id))
+
+    //setUser(app.currentUser)
+    //const {muser_id} = await app.currentUser.functions.function0('Sys_id')
+    
+    /* (my_id===undefined)?(setUserinfo(my_id)
+    ):(
+      setUserinfo()
+      //console.log("keepin "+ my_id.User_id)
+    ) */
+    console.log("keepin "+ userinfo)
   }
   
   // Let logged in users log out
   const logOut = async () => {
-    await app.currentUser?.logOut();
-    setUser(null);
+    await app.currentUser?.logOut()
+    setUser('')
+    setUserinfo('')
   }
   
   // Provide the current user and authentication methods to the wrapped tree
   const context = {
     id: REALM_APP_ID,
+    userinfo: userinfo,
     user,
     logIn,
     logOut,

@@ -5,20 +5,17 @@ import Box from '@material-ui/core/Box';
 
 export default function Content() {
     const [cares,setCares] = useState([])
-    const {user} = useRealmApp();
-/*     const cares = [
-        {cname:"PGA1"},
-        {cname:"PGA2"}
-      ] */
+    const {user,userinfo} = useRealmApp();
+
     useEffect(()=>{
-        async function getcares() {
-            //cares = await user.functions.caresList('5f112b3046adfc2ce00f39c1','Care'); 
-            //user.functions.caresList('5f112b3046adfc2ce00f39c1','Care').then(rst=>setCares(rst))
-            setCares(await user.functions.caresList('5f112b3046adfc2ce00f39c1','Care')); 
+        async function getcares() {            
+            
+            (userinfo.User_id!==undefined)?setCares(await user.functions.caresList(userinfo.User_id,'Care')):setCares([]) 
+            console.log(userinfo.User_id) 
         }
         getcares()
-    },[user.functions])
-    console.log(cares)
+    },[])
+    //console.log(cares)
     const carelist = cares.map((care,i) => <Box pt={3} key={i}><Care cname={care.Name} key={i} /></Box>)
     return (
         <div>

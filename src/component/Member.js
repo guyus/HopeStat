@@ -6,7 +6,7 @@ export default function Member(props) {
     return (
         <div>
             {props.Name} {props.Surname} ({props.Nick_Name})
-            <Ta User_id = {props.User_id} />
+            <Ta member_id = {props.User_id} />
         </div>
     )
 }

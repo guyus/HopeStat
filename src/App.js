@@ -21,20 +21,18 @@ export default function App() {
 function RequireAuthentication() {
   //const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
   const app = useRealmApp();
+  const {userinfo} = useRealmApp();
   //console.log(app)
   if (!app) {
     return <div>Loading</div>;
   }
-  const d = new Date()  
-  const d1 = new Date(d.setDate(d.getDate() - d.getDay()))
-  d1.setUTCHours(0,0,0,0);
-  return app.user ? ( // <StateContext.Provider value={{ state, dispatch }}>
+  console.log(userinfo)
+  console.log(app.user)
+  return (userinfo) ? ( // <StateContext.Provider value={{ state, dispatch }}>
     <>
       <TopBar />
       <Container maxWidth="sm" >
-      {console.log(app.user)}{
-      
-      console.log( d1.toISOString())}
+      {console.log(userinfo)}
         <Content />
       </Container>  
     </>

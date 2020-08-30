@@ -13,7 +13,7 @@ function Members(props) {
         async function getMembers() {
             setmembers(await user.functions.membersList(props.cname))
         }getMembers()
-    },[props.cname, user.functions])
+    },[])
     console.log(members)
     const memberlist = members.map((member) => <Member {...member} key={member.User_id}></Member> )
     

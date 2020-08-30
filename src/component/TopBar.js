@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRealmApp } from "../realm/RealmApp"
+import { SundayDate } from './Util'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,17 +23,9 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function TopBar() {
-    const {user,logIn,logOut} = useRealmApp();
+    const {userinfo,logOut} = useRealmApp();
     const classes = useStyles();
 
-    const handleLogin = async () => {
-      //setError((e) => ({ ...e, password: undefined }));
-      try {
-        return await logIn('email', 'password');
-      } catch (err) {
-        //handleAuthenticationError(err);
-      }
-    };
     const d = new Date()  
     const sunDate = new Date(d.setDate(d.getDate() - d.getDay()))
     sunDate.setUTCHours(0,0,0,0);
@@ -44,9 +37,9 @@ export default function TopBar() {
           </IconButton>
           <Typography variant="h5" className={classes.title}>
             Hope of Bangkok Stat
-          </Typography>Date: [{sunDate.toDateString()}]
-            <Button color="inherit" onClick={e=>logOut()}>{user.id}</Button>
-            <Button color="inherit" onClick={()=>handleLogin()}>Logout</Button>
+          </Typography>Date: [{SundayDate('str')}]
+            <Button color="inherit" onClick={e=>logOut()}>{userinfo.Name}</Button>
+            <Button color="inherit" onClick={e=>logOut()}>Logout</Button>
         </Toolbar>
       </AppBar>
     )
