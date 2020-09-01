@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import RealmApp,{ useRealmApp } from "./realm/RealmApp"
 import liff from '@line/liff'
 //import { StateContext } from './contexts'
@@ -29,8 +29,10 @@ function RequireAuthentication() {
   if (!app) {
     return <div>Loading</div>;
   }
-  
-  const getProfile = async() => {
+  useEffect(()=>{
+    //getProfile()
+  },[])
+  const getProfile1 = async() => {
     //liff.init(async () => {
       let getProfile = await liff.getProfile()
       SetLineinfo({
@@ -40,12 +42,23 @@ function RequireAuthentication() {
         statusMessage: getProfile.statusMessage
       })
     //});
+    console.log('profile '+lineinfo) 
   }
-  liff.init({ liffId: '1654364578-QgeLnWaX' }).then(()=>{
+  const getP = async ()=> {
+    liff.getProfile()
+    .then(profile => {
+      console.log('profile '+profile.displayName) 
+    })
+    .catch((err) => {
+      console.log('error', err);
+    });
+  }
+  liff.init({ liffId: '1654364578-prGPRg6j' }).then(()=>{
     if (!liff.isLoggedIn()) {
       // set `redirectUri` to redirect the user to a URL other than the front page of your LIFF app.
-      liff.login();
+      liff.login().then(getP())
     }
+    //getProfile1()
   })
   //liff.ready.then(getProfile())
   console.log(userinfo)
