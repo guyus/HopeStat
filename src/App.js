@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import RealmApp,{ useRealmApp } from "./realm/RealmApp"
+import * as Realm from "realm-web";
 import liff from '@line/liff'
 //import { StateContext } from './contexts'
 //import appReducer from './reducers'
@@ -24,46 +25,29 @@ function RequireAuthentication() {
   //const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
   const [lineinfo,SetLineinfo] = useState()
   const app = useRealmApp();
-  const {userinfo} = useRealmApp();
+  const {userinfo,logIn} = useRealmApp();
+  //let lineinfo = {}
   //console.log(app)
+  useEffect(()=>{
+    SetLineinfo(checkCredentailLine())
+    console.log('lininfo app=> '+lineinfo)
+    //logIn({ Line_id:'U83eafec31bf0aa68b8debc67b5e83d9e' })
+    logIn({ Line_id:lineinfo })
+  },[])
+
   if (!app) {
     return <div>Loading</div>;
   }
-  useEffect(()=>{
-    //getProfile()
-  },[])
-  const getProfile1 = async() => {
-    //liff.init(async () => {
-      let getProfile = await liff.getProfile()
-      SetLineinfo({
-        name: getProfile.displayName,
-        userLineID: getProfile.userId,
-        pictureUrl: getProfile.pictureUrl,
-        statusMessage: getProfile.statusMessage
-      })
-    //});
-    console.log('profile '+lineinfo) 
-  }
-  const getP = async ()=> {
-    liff.getProfile()
-    .then(profile => {
-      console.log('profile '+profile.displayName) 
-    })
-    .catch((err) => {
-      console.log('error', err);
-    });
-  }
-  liff.init({ liffId: '1654364578-prGPRg6j' }).then(()=>{
+  
+  const checkCredentailLine = async () => {
+    await liff.init({ liffId: '1654364578-prGPRg6j' })
     if (!liff.isLoggedIn()) {
-      // set `redirectUri` to redirect the user to a URL other than the front page of your LIFF app.
-      liff.login().then(getP())
+      liff.login()
     }
-    //getProfile1()
-  })
-  //liff.ready.then(getProfile())
-  console.log(userinfo)
-  console.log(app.user)
-  console.log(lineinfo)
+    const getProfile = await liff.getProfile()
+    return getProfile.userId
+  }
+
   return (userinfo) ? ( // <StateContext.Provider value={{ state, dispatch }}>
     <>
       <TopBar />
@@ -75,6 +59,6 @@ function RequireAuthentication() {
     </>
       //</StateContext.Provider>
     ) : (
-      <LoginScreen />
+      <LoginScreen lineinfo={lineinfo} />
     )
 }

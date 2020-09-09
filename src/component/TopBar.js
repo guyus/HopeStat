@@ -37,7 +37,7 @@ export default function TopBar() {
           </IconButton>
           <Typography variant="h5" className={classes.title}>
             Hope of Bangkok Stat
-          </Typography>Date: [{SundayDate('str')}]
+          </Typography>ประจำอาทิคย์ที่ : [{SundayDate('str')}]
             <Button color="inherit" onClick={e=>logOut()}>{userinfo.Name}</Button>
             <Button color="inherit" onClick={e=>logOut()}>Logout</Button>
         </Toolbar>
