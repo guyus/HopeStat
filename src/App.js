@@ -11,8 +11,6 @@ import Content from './component/Content'
 
 import { Container } from '@material-ui/core';
 
-
-
 export default function App() {
   return (
       <RealmApp >
@@ -24,15 +22,22 @@ export default function App() {
 function RequireAuthentication() {
   //const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
   const [lineinfo,SetLineinfo] = useState()
+  const [isLoading,SetIsLoading] = useState()
   const app = useRealmApp();
   const {userinfo,logIn} = useRealmApp();
   //let lineinfo = {}
   //console.log(app)
-  useEffect(()=>{
-    SetLineinfo(checkCredentailLine())
-    console.log('lininfo app=> '+lineinfo)
-    //logIn({ Line_id:'U83eafec31bf0aa68b8debc67b5e83d9e' })
-    logIn({ Line_id:lineinfo })
+  useEffect( () => {
+    async function fetchData() {
+      SetIsLoading(true)
+      const linfo = await checkCredentailLine()
+      SetLineinfo(linfo)
+      console.log('lininfo app=> '+linfo)
+      //logIn({ Line_id:'U83eafec31bf0aa68b8debc67b5e83d9e' })
+      await logIn({ Line_id:lineinfo })
+      SetIsLoading(false) 
+    }
+    fetchData()
   },[])
 
   if (!app) {
@@ -48,7 +53,7 @@ function RequireAuthentication() {
     return getProfile.userId
   }
 
-  return (userinfo) ? ( // <StateContext.Provider value={{ state, dispatch }}>
+  return (userinfo && isLoading===false) ? ( 
     <>
       <TopBar />
       <Container maxWidth="sm" >
@@ -57,7 +62,7 @@ function RequireAuthentication() {
         <Content />
       </Container>  
     </>
-      //</StateContext.Provider>
+      
     ) : (
       <LoginScreen lineinfo={lineinfo} />
     )
