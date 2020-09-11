@@ -9,7 +9,7 @@ import LoginScreen from './component/LoginScreen'
 import TopBar from './component/TopBar'
 import Content from './component/Content'
 
-import { Container } from '@material-ui/core';
+import { Container,Typography,Box } from '@material-ui/core';
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
 function RequireAuthentication() {
   //const [ state, dispatch ] = useReducer(appReducer, { user: ''} )
   const [lineinfo,SetLineinfo] = useState()
-  const [isLoading,SetIsLoading] = useState()
+  const [isLoading,SetIsLoading] = useState(true)
   const app = useRealmApp();
   const {userinfo,logIn} = useRealmApp();
   //let lineinfo = {}
@@ -32,10 +32,17 @@ function RequireAuthentication() {
       SetIsLoading(true)
       const linfo = await checkCredentailLine()
       SetLineinfo(linfo)
-      console.log('lininfo app=> '+linfo)
-      //logIn({ Line_id:'U83eafec31bf0aa68b8debc67b5e83d9e' })
-      await logIn({ Line_id:lineinfo })
+      //SetLineinfo({ Line_id:linfo })
+      console.log('app:lininfo => '+lineinfo)
+
+      try{
+        await logIn({ Line_id:linfo },linfo)
+      } catch(err){
+        SetIsLoading(true) 
+        console.log('app:fetchData '+err);
+      }
       SetIsLoading(false) 
+      console.log('loading = ' + isLoading)
     }
     fetchData()
   },[])
@@ -43,27 +50,44 @@ function RequireAuthentication() {
   if (!app) {
     return <div>Loading</div>;
   }
-  
+
   const checkCredentailLine = async () => {
-    await liff.init({ liffId: '1654364578-prGPRg6j' })
-    if (!liff.isLoggedIn()) {
-      liff.login()
+    try{
+      await liff.init({ liffId: '1654364578-prGPRg6j' })
+      if (!liff.isLoggedIn()) {
+        liff.login()
+      }
+      const getProfile = await liff.getProfile()
+      return getProfile.userId
+    } catch(err){
+      console.log('app:checkLine '+ err);
+      return null
     }
-    const getProfile = await liff.getProfile()
-    return getProfile.userId
   }
 
-  return (userinfo && isLoading===false) ? ( 
-    <>
-      <TopBar />
-      <Container maxWidth="sm" >
-      {console.log(userinfo)}
-      {}
-        <Content />
-      </Container>  
-    </>
-      
+  const Loading = () =>{
+    return <Box m={2} color="warning" >
+      <Typography variant="h5">Loading... กำลังเข้าสู่ระบบ กรุณารอสักครู่</Typography>
+      </Box>
+  }
+
+  return (
+    (!isLoading) ? ( 
+      (userinfo) ? ( 
+      <>
+        <TopBar />
+        <Container maxWidth="sm" >
+        {console.log('app:userinfo '+JSON.stringify(userinfo))}
+        {console.log('app:isLoading '+isLoading)}
+          <Content />
+        </Container>  
+      </>
+        
+      ) : (
+        <LoginScreen lineinfo={lineinfo} />
+      )
     ) : (
-      <LoginScreen lineinfo={lineinfo} />
+      <Loading />
     )
+  )
 }
