@@ -3,13 +3,13 @@ import { Container,Typography,Button,TextField } from '@material-ui/core';
 import { useRealmApp } from "../realm/RealmApp"
 
 export default function LoginScreen(props) {
-    const {logIn} = useRealmApp();
+    const {logIn,isLoading} = useRealmApp();
     const [mobile_No,setMobile_No] = React.useState('0941177741')
     //const lineinfo = props.lineinfo
     console.log('linefi screen= '+props.lineinfo)
     return (
         <Container maxWidth="sm" >
-  
+            {console.log('isLoading'+isLoading)}
             <Typography variant="h6" component="h6">
             ใส่หมายเลขโทรศัพท์
             </Typography>

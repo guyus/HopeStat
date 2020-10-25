@@ -16,6 +16,7 @@ const RealmApp = ({ children }) => {
   
   const [user, setUser] = React.useState();
   const [userinfo, setUserinfo] = React.useState();
+  const [isLoading,SetIsLoading] = React.useState()
 
   React.useEffect(() => {
     setUser(app.currentUser);
@@ -29,6 +30,7 @@ const RealmApp = ({ children }) => {
   
   // Let registered users log in
   const logIn = async (filter,lineinfo) => {
+    SetIsLoading(true)
     //const credentials = Realm.Credentials.emailPassword(email, password);
     //console.log(mobile_No)
     //const credentials = Realm.Credentials.anonymous()
@@ -50,6 +52,7 @@ const RealmApp = ({ children }) => {
       //console.log("keepin "+ my_id.User_id)
     ) */
     console.log("keepin "+ userinfo)
+    SetIsLoading(false)
   }
   
   // Let logged in users log out
@@ -63,6 +66,7 @@ const RealmApp = ({ children }) => {
   const context = {
     id: REALM_APP_ID,
     userinfo: userinfo,
+    isLoading: isLoading,
     user,
     logIn,
     logOut,
