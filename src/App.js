@@ -9,8 +9,7 @@ import LoginScreen from './component/LoginScreen'
 import TopBar from './component/TopBar'
 import Content from './component/Content'
 
-import { Container } from '@material-ui/core';
-import { TramOutlined } from '@material-ui/icons';
+import { Container,Typography,Box } from '@material-ui/core';
 
 export default function App() {
   return (
@@ -47,18 +46,24 @@ function RequireAuthentication() {
   if (!app) {
     return <div>Loading</div>;
   }
-  
+
   const checkCredentailLine = async () => {
-    await liff.init({ liffId: '1654364578-prGPRg6j' })
-    if (!liff.isLoggedIn()) {
-      //SetIsLineLoading(false)
-      liff.login()
-      
-    } else {
-      //SetIsLineLoading(true)
+    try{
+      await liff.init({ liffId: '1654364578-prGPRg6j' })
+      if (!liff.isLoggedIn()) {
+        liff.login()
+      }
+      const getProfile = await liff.getProfile()
+      return getProfile.userId
+    } catch(err){
+      console.log('app:checkLine '+ err);
+      return null
     }
-    const getProfile = await liff.getProfile()
-    return getProfile.userId
+  }
+  const Loading = () =>{
+    return <Box m={2} color="warning" >
+      <Typography variant="h5">Loading... กำลังเข้าสู่ระบบ กรุณารอสักครู่</Typography>
+      </Box>
   }
 
   return (userinfo ) ? ( 
@@ -72,7 +77,7 @@ function RequireAuthentication() {
     </>
       
     ) : (
-    (!isLoading)?<LoginScreen lineinfo={lineinfo} />:<div>{console.log('isLoading'+isLoading)}Please Waiting... login Line Account or Click to Logon</div>
+    (!isLoading)?<LoginScreen lineinfo={lineinfo} />:<div>{console.log('isLoading'+isLoading)}<Loading /></div>
       /* <LoginScreen lineinfo={lineinfo} /> */
     )
 }

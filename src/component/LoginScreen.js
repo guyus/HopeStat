@@ -6,10 +6,11 @@ export default function LoginScreen(props) {
     const {logIn,isLoading} = useRealmApp();
     const [mobile_No,setMobile_No] = React.useState('0941177741')
     //const lineinfo = props.lineinfo
-    console.log('linefi screen= '+props.lineinfo)
+    console.log('lineInfo Loginscreen= '+props.lineinfo)
     return (
         <Container maxWidth="sm" >
             {console.log('isLoading'+isLoading)}
+  
             <Typography variant="h6" component="h6">
             ใส่หมายเลขโทรศัพท์
             </Typography>
