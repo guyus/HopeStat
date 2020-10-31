@@ -5,10 +5,8 @@ import { useRealmApp } from "../realm/RealmApp"
 export default function LoginScreen(props) {
     const {logIn} = useRealmApp()
     const [mobile_No,setMobile_No] = React.useState('')
-    //const {userId,DisplayName,z} = props
-    //console.log('lineInfo Loginscreen= '+props+' '+JSON.stringify(props)+' '+props.displayName)
     const lineSave = {Line_id:props.userId, Line_display:props.displayName, Line_pic:props.pictureUrl}
-    console.log('lineInfo Loginscreen= '+JSON.stringify(lineSave))
+    //console.log('lineInfo Loginscreen= '+JSON.stringify(lineSave))
     const handleValidation = (m,d)=>{
         if (m.Mobile_No!==''){
             logIn(m,d)

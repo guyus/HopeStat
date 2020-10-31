@@ -31,11 +31,9 @@ function RequireAuthentication() {
   //console.log(app)
   useEffect( () => {
     async function fetchData() {
-      //SetIsLineLoading(true)
       const linfo = await checkCredentailLine()
-
       SetLineinfo((linfo))
-      console.log('lineinfo app=> '+lineinfo)
+      //console.log('lineinfo app=> '+lineinfo)
       if(linfo.userId!==null)
         await logIn({ Line_id:linfo.userId })
     }

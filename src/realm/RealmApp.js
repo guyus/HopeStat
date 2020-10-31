@@ -39,22 +39,13 @@ const RealmApp = ({ children }) => {
     //console.log(app.credentials)
     try{
       await app.logIn(credentials)
-      console.log('saveData '+JSON.stringify(saveData) + app.currentUser)
+      //console.log('saveData '+JSON.stringify(saveData) + app.currentUser)
       setUser(app.currentUser)
       if (app.currentUser)
         setUserinfo(await app.currentUser.functions.userSave(filter,saveData))
     }catch(err){
       console.log('app:login '+ err)
     }
-
-    //setUser(app.currentUser)
-    //const {muser_id} = await app.currentUser.functions.function0('Sys_id')
-    
-    /* (my_id===undefined)?(setUserinfo(my_id)
-    ):(
-      setUserinfo()
-      //console.log("keepin "+ my_id.User_id)
-    ) */
     console.log("keepin "+ userinfo)
     SetIsLoading(false)
   }
