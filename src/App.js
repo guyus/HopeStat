@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import RealmApp,{ useRealmApp } from "./realm/RealmApp"
-import * as Realm from "realm-web";
+//import * as Realm from "realm-web";
 import liff from '@line/liff'
 //import { StateContext } from './contexts'
 //import appReducer from './reducers'
@@ -26,19 +26,18 @@ function RequireAuthentication() {
   
   const app = useRealmApp();
   const {userinfo,logIn,isLoading} = useRealmApp();
+  let line_email
   //let lineinfo = {}
   //console.log(app)
   useEffect( () => {
     async function fetchData() {
       //SetIsLineLoading(true)
       const linfo = await checkCredentailLine()
-      //if (linfo=='')
 
-      SetLineinfo(linfo)
-      console.log('lineinfo app=> '+linfo)
-      //logIn({ Line_id:'U83eafec31bf0aa68b8debc67b5e83d9e' })
-      await logIn({ Line_id:linfo })
-      //SetIsLoading(false) 
+      SetLineinfo((linfo))
+      console.log('lineinfo app=> '+lineinfo)
+      if(linfo.userId!==null)
+        await logIn({ Line_id:linfo.userId })
     }
     fetchData()
   },[])
@@ -54,14 +53,16 @@ function RequireAuthentication() {
         liff.login()
       }
       const getProfile = await liff.getProfile()
-      return getProfile.userId
+      line_email = liff.getDecodedIDToken().email
+      console.log('line_email'+line_email)
+      return getProfile
     } catch(err){
       console.log('app:checkLine '+ err);
       return null
     }
   }
   const Loading = () =>{
-    return <Box m={2} color="warning" >
+    return <Box m={5} color="warning" >
       <Typography variant="h5">Loading... กำลังเข้าสู่ระบบ กรุณารอสักครู่</Typography>
       </Box>
   }
@@ -71,13 +72,11 @@ function RequireAuthentication() {
       <TopBar />
       <Container maxWidth="sm" >
       {console.log(userinfo)}
-      {}
         <Content />
       </Container>  
     </>
-      
     ) : (
-    (!isLoading)?<LoginScreen lineinfo={lineinfo} />:<div>{console.log('isLoading'+isLoading)}<Loading /></div>
+    (!isLoading)?<LoginScreen {...lineinfo}  line_email={line_email} />:<div>{console.log('isLoading'+isLoading)}<Loading /></div>
       /* <LoginScreen lineinfo={lineinfo} /> */
     )
 }

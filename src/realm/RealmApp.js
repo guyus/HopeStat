@@ -29,21 +29,23 @@ const RealmApp = ({ children }) => {
   }
   
   // Let registered users log in
-  const logIn = async (filter,lineinfo) => {
+  const logIn = async (filter,saveData) => {
     SetIsLoading(true)
     //const credentials = Realm.Credentials.emailPassword(email, password);
-    console.log('logIn:lineinfo '+ filter)
+    console.log('logIn:lineinfo '+ JSON.stringify(filter))
     console.log(filter)
     //const credentials = Realm.Credentials.anonymous()
     const credentials = Realm.Credentials.function(filter)
     //console.log(app.credentials)
-    await app.logIn(credentials)
-    console.log(app.currentUser)
-    setUser(app.currentUser)
-    const Sys_id = {Sys_id:app.currentUser._id,Line_id:lineinfo}
-    console.log(Sys_id)
-    if (app.currentUser)
-      setUserinfo(await app.currentUser.functions.userSave(filter,Sys_id))
+    try{
+      await app.logIn(credentials)
+      console.log('saveData '+JSON.stringify(saveData) + app.currentUser)
+      setUser(app.currentUser)
+      if (app.currentUser)
+        setUserinfo(await app.currentUser.functions.userSave(filter,saveData))
+    }catch(err){
+      console.log('app:login '+ err)
+    }
 
     //setUser(app.currentUser)
     //const {muser_id} = await app.currentUser.functions.function0('Sys_id')
