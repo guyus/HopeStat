@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRealmApp } from "../realm/RealmApp"
-import { SundayDate } from './Util'
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,7 +38,8 @@ export default function TopBar() {
           </IconButton>
           <Typography variant="h5" className={classes.title}>
             Hope of Bangkok Stat
-          </Typography>ประจำอาทิคย์ที่ : [{SundayDate('str')}]
+          </Typography>
+            <Avatar alt={userinfo.Name} src={userinfo.Line_pic} />
             <Button color="inherit" onClick={e=>logOut()}>{userinfo.Name}</Button>
             <Button color="inherit" onClick={e=>logOut()}>Logout</Button>
         </Toolbar>
